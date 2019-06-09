@@ -1,0 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Workout.Dashboard.Web.Queries
+{
+    public interface IExerciseQueries
+    {
+        Task<IEnumerable<IDictionary<string, object>>> GetExerciseExecutionsInPeriodAsync(int exerciseId, DateTime startDate, DateTime endDate); 
+    }
+}
