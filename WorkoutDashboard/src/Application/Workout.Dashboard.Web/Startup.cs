@@ -13,7 +13,6 @@ using Workout.Dashboard.Domain.AggregatesModel.WorkoutAggregate;
 using Workout.Dashboard.Infrastructure.PostgreSQL;
 using Workout.Dashboard.Web.BusinessOps;
 using Workout.Dashboard.Web.Commands;
-using Workout.Dashboard.Web.Commands.Inferfaces;
 using Workout.Dashboard.Web.Queries;
 
 namespace src
@@ -40,7 +39,7 @@ namespace src
             // Custom references
             services.AddSingleton<IWorkoutRepository, WorkoutRepository>();
             services.AddSingleton<IStrRateOperations, StrRateOperations>();
-            services.AddSingleton<ExerciseCommands>();
+            services.AddSingleton<IExerciseCommands, ExerciseCommands>();
             services.AddSingleton<IExerciseQueries, ExerciseQueries>();
              
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

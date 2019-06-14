@@ -207,7 +207,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">TOP STR-Rate</span>
-              <span class="info-box-number">90 <small>strp</small></span>
+              <span class="info-box-number"><span id="strrate-value">90</span><small> strp</small></span>
               <span class="info-box-text">On 1/12/2019</span>
             </div>
             <!-- /.info-box-content -->
@@ -252,6 +252,21 @@
             <div class="info-box-content">
               <span class="info-box-text">STR-Rate median</span>
               <span class="info-box-number">88 strp</span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+               <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Max lift</span>
+              <span class="info-box-number">180 kg</span>
+              <span class="info-box-text">2 reps</span>
+              <span class="info-box-text">On 1/12/2019</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -368,7 +383,9 @@
   
 </div>
 <!-- ./wrapper -->
-
+<script>
+  var ExerciseId = @ViewBag.ExerciseId;
+</script>
 <!-- jQuery 3 -->
 <script async="" src="//www.google-analytics.com/analytics.js"></script><script src="/lib/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -382,7 +399,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/js/demo.js"></script>
 <!-- page script -->
-<script src="/js/pages/overview/main.js"></script>
+<script src="/js/pages/exercise/main.js"></script>
 
 
 </body></html>
