@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -21,15 +22,12 @@ namespace Workout.Dashboard.Web.BusinessOps
         {
             return exercises.Max(x => CalculateStrRate(x["lift"].ToString().AsDecimal(2), x["repcount"].ToString().AsInt()));
         }
-
-        public dynamic CalculateTopStrRateWithDate(IEnumerable<IDictionary<string, object>> exercises)
+        
+        public dynamic CalculateTopStrRateExecution(IEnumerable<dynamic> executions)
         {
-            var top = exercises.Aggregate((e1 ,e2) => CalculateStrRate(e1["lift"].ToString().AsDecimal(2), e1["repcount"].ToString().AsInt())
-            > CalculateStrRate(e2["lift"].ToString().AsDecimal(2), e2["repcount"].ToString().AsInt()) ? e1 : e2);
-            var responseObject = new ExpandoObject();
-            responseObject.StrRate = CalculateStrRate(top["lift"].ToString().AsDecimal(2), top["repcount"].ToString().AsInt());
-            responseObject.Date = top["WorkoutDate"];
-            return responseObject;
+            var top = executions.Aggregate((e1 ,e2) => CalculateStrRate(e1.lift, e1.repcount)
+            > CalculateStrRate(e2.lift, e2.repcount) ? e1 : e2);
+            return top;
         }
     }
 }

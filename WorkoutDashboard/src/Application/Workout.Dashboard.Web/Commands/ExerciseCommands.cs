@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Workout.Dashboard.Web.Queries;
 using Workout.Dashboard.Web.BusinessOps;
 using System.Dynamic;
+using Workout.Dashboard.Web.Helpers;
 
 namespace Workout.Dashboard.Web.Commands
 {
@@ -31,8 +32,12 @@ namespace Workout.Dashboard.Web.Commands
 
         public async Task<dynamic> GetTopStrRateInPeriod(int exerciseId, DateTime startDate, DateTime endDate)
         {
-            IEnumerable<IDictionary<string, object>> executions = await _exerciseQueries.GetExerciseExecutionsInPeriodAsync(exerciseId, startDate, endDate);
-            return _strRateOperations.CalculateTopStrRateWithDate(executions);
+            IEnumerable<dynamic> executions = (await _exerciseQueries.GetExerciseExecutionsInPeriodAsync(exerciseId, startDate, endDate)).AsDynamicList();
+            var topExecution = _strRateOperations.CalculateTopStrRateExecution(executions);
+            dynamic responseObject = new ExpandoObject();
+            responseObject.StrRate = _strRateOperations.CalculateStrRate(topExecution.lift, topExecution.repcount);
+            responseObject.Date = topExecution.workoutdate.ToShortDateString(); //TODO Add culture
+            return responseObject;
         }
 
     }

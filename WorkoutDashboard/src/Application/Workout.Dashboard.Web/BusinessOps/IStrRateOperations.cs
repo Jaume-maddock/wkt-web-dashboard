@@ -6,7 +6,7 @@ namespace Workout.Dashboard.Web.BusinessOps
     {
         decimal CalculateAverageStrRate(IEnumerable<IDictionary<string, object>> exercises);
         decimal CalculateStrRate(decimal lift, int repCount);
-        decimal CalculateTopStrRate(IEnumerable<IDictionary<string, object>> exercises);
-        dynamic CalculateTopStrRateWithDate(IEnumerable<IDictionary<string, object>> exercises);
+        dynamic CalculateTopStrRateExecution(IEnumerable<dynamic> executions);
+
     }
 }
