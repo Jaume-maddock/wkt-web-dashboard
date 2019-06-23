@@ -74,7 +74,8 @@ namespace Workout.Dashboard.Web.Queries
                         ex.exercise_name as Name,
                         we.exercise_lift as Lift,
                         we.exercise_rep_count as RepCount,
-                        we.lift_type_id as LiftType
+                        we.lift_type_id as LiftType,
+                        w.workout_date as WorkoutDate
                         from workout_exercises we
                         inner join exercise ex on we.exercise_id = ex.exercise_id
                         inner join exercise_type et on ex.exercise_type_id = et.exercise_type_id 

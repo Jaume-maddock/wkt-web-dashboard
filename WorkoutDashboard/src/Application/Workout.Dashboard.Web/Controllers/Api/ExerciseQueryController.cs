@@ -20,7 +20,8 @@ namespace Workout.Dashboard.Web.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetTopStrRate(int id)
         {
-            return await GetTopStrRateInPeriod(id, DateTime.MinValue, DateTime.Now);
+            if(id <= 0) return BadRequest();
+            return Ok(await GetTopStrRateInPeriod(id, DateTime.MinValue, DateTime.Now));
         }
 
         [Route("{id}/strrate/topindates")]
@@ -35,7 +36,8 @@ namespace Workout.Dashboard.Web.Controllers.Api
         [HttpGet]
         public async Task<IActionResult> GetAverageStrRate(int id)
         {
-            return await GetAverageStrRateInPeriod(id, DateTime.MinValue, DateTime.Now);
+            if(id <= 0) return BadRequest();
+            return Ok(await GetAverageStrRateInPeriod(id, DateTime.MinValue, DateTime.Now));
         }
 
         [Route("{id}/strrate/averageindates")]

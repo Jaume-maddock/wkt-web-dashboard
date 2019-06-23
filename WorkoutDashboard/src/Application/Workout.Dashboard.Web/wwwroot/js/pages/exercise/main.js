@@ -13,13 +13,25 @@ $(function() {
 
     this.ExerciseId = ExerciseId || 0;
 
-    function renderTopStrRate(data) {
-        $("#box-top-str .info-box-value").html(data.StrRate);
-        $("#box-top-str .info-box-date").html(data.Date);
+    function renderBoxInfo(id, data) {
+        $(id + " .info-box-value").html(data.StrRate);
+        if(data.Date !== undefined) {
+            $(id + " .info-box-date").html(data.Date);
+        }
     };
 
     $.get("/api/v1/exercises/"+ this.ExerciseId +"/strrate/top",
     function(responseData, status) {
-        renderTopStrRate(responseData);
+        renderBoxInfo("#box-top-str", responseData);
+    });
+
+    $.get("/api/v1/exercises/"+ this.ExerciseId +"/strrate/average",
+    function(responseData, status) {
+        renderBoxInfo("#box-mean-str", responseData);
+    });
+
+    $.get("/api/v1/exercises/"+ this.ExerciseId +"/strrate/current",
+    function(responseData, status) {
+        renderBoxInfo("#box-current-str", responseData);
     });
 });

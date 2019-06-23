@@ -8,19 +8,15 @@ namespace Workout.Dashboard.Web.BusinessOps
 {
     public class StrRateOperations : IStrRateOperations
     {
-        public decimal CalculateAverageStrRate(IEnumerable<IDictionary<string, object>> exercises)
+        public double CalculateAverageStrRate(IEnumerable<dynamic> exercises)
         {
-            return exercises.Average(x => CalculateStrRate(x["lift"].ToString().AsDecimal(2), x["repcount"].ToString().AsInt()));
+            var a = exercises.Average(x => CalculateStrRate(x.lift, x.repcount));
+            return 0;
         }
 
         public decimal CalculateStrRate(decimal lift, int repCount)
         {
             return lift * repCount;
-        }
-
-        public decimal CalculateTopStrRate(IEnumerable<IDictionary<string, object>> exercises)
-        {
-            return exercises.Max(x => CalculateStrRate(x["lift"].ToString().AsDecimal(2), x["repcount"].ToString().AsInt()));
         }
         
         public dynamic CalculateTopStrRateExecution(IEnumerable<dynamic> executions)
