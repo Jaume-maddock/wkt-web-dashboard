@@ -67,5 +67,34 @@ namespace Workout.Dashboard.Web.Commands
             return responseObject;
         }
 
+        /// <summary>
+        /// Gets top lift, repcount and date in a period.
+        /// </summary>
+        /// <param name="exerciseId"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
+        public async Task<dynamic> GetTopLiftInPeriod(int exerciseId, DateTime startDate, DateTime endDate)
+        {
+            dynamic topLiftExecution = (await _exerciseQueries.GetTopLiftInPeriod(exerciseId, startDate, endDate)).AsDynamicList();
+            return topLiftExecution;
+        }
+
+
+        public async Task<IEnumerable<dynamic>> GetStrRateEvolutionInPeriod(int exerciseId, DateTime startDate, DateTime endDate)
+        {
+            IEnumerable<dynamic> executions = (await _exerciseQueries.GetExerciseExecutionsInPeriodAsync(exerciseId, startDate, endDate)).AsDynamicList();
+            var dateExecutions = executions.GroupBy(x => x.workoutdate);
+
+            var responseObjectList = new List<dynamic>(); 
+            foreach (var executionGroup in dateExecutions)
+            {
+                dynamic oneDayData = new ExpandoObject();
+                oneDayData.StrRate = _strRateOperations.CalculateAverageStrRate(executionGroup);
+                oneDayData.Date = executionGroup.First().workoutdate.ToShortDateString();
+                responseObjectList.Add(oneDayData);
+            }
+            return responseObjectList;
+        }
     }
 }

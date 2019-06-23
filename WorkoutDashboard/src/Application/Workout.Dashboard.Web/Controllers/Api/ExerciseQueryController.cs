@@ -55,5 +55,37 @@ namespace Workout.Dashboard.Web.Controllers.Api
             if(id <= 0) return BadRequest();
             return Ok(await _exerciseCommands.GetCurrentStrRate(id));
         }
+
+        [Route("{id}/lift/top")]
+        [HttpGet]
+        public async Task<IActionResult> GetTopLift(int id)
+        {
+            if(id <= 0) return BadRequest();
+            return Ok(await GetTopLiftInPeriod(id, DateTime.MinValue, DateTime.Now));
+        }
+
+        [Route("{id}/lift/topindates")]
+        [HttpGet]
+        public async Task<IActionResult> GetTopLiftInPeriod(int id, DateTime startDate, DateTime endDate)
+        {
+            if(id <= 0) return BadRequest();
+            return Ok(await _exerciseCommands.GetTopLiftInPeriod(id, startDate, endDate));
+        }
+
+        [Route("{id}/strrate/evolution")]
+        [HttpGet]
+        public async Task<IActionResult> GetStrRateEvolution(int id)
+        {
+            if(id <= 0) return BadRequest();
+            return Ok(await GetStrRateEvolutionInPeriod(id, DateTime.MinValue, DateTime.Now));
+        }
+
+        [Route("{id}/strrate/evolutionindates")]
+        [HttpGet]
+        public async Task<IActionResult> GetStrRateEvolutionInPeriod(int id, DateTime startDate, DateTime endDate)
+        {
+            if(id <= 0) return BadRequest();
+            return Ok(await _exerciseCommands.GetStrRateEvolutionInPeriod(id, startDate, endDate));
+        }
     }
 }

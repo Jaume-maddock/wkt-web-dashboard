@@ -8,5 +8,7 @@ namespace Workout.Dashboard.Web.Commands
         Task<dynamic> GetAverageStrRateInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
         Task<dynamic> GetTopStrRateInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
         Task<dynamic> GetCurrentStrRate(int exerciseId);
+        Task<dynamic> GetTopLiftInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
+        Task<IEnumerable<dynamic>> GetStrRateEvolutionInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
     }
 }

@@ -86,5 +86,23 @@ namespace Workout.Dashboard.Web.Queries
                 return (from row in dbResponse select (IDictionary<string, object>)row).ToList();
             }
         } 
+
+        public async Task<IDictionary<string, object>> GetTopLiftInPeriodByExercise(int exerciseId)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                IEnumerable<dynamic> dbResponse = await connection.QueryAsync<dynamic>(
+                    @"select we.exercise_lift as Lift,
+                        we.exercise_rep_count as RepCount,
+                        w.workout_date as WorkoutDate
+                        from workout_exercises we
+                        inner join workout w on we.workout_id = w.workout_id
+                        where we.exercise_id = '{exerciseId}'
+                        and w.workout_date >= '{startDate}' and w.workout_date <= '{endDate}'
+                        order by we.exercise_lift desc limit 1;";
+                return (from row in dbResponse select (IDictionary<string, object>)row).ToList().FirstOrDefault();
+            }
+        }
     }
 }
