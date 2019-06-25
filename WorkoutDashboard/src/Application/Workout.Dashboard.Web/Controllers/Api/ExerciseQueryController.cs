@@ -21,7 +21,7 @@ namespace Workout.Dashboard.Web.Controllers.Api
         public async Task<IActionResult> GetTopStrRate(int id)
         {
             if(id <= 0) return BadRequest();
-            return Ok(await GetTopStrRateInPeriod(id, DateTime.MinValue, DateTime.Now));
+            return await GetTopStrRateInPeriod(id, DateTime.MinValue, DateTime.Now);
         }
 
         [Route("{id}/strrate/topindates")]
@@ -37,7 +37,7 @@ namespace Workout.Dashboard.Web.Controllers.Api
         public async Task<IActionResult> GetAverageStrRate(int id)
         {
             if(id <= 0) return BadRequest();
-            return Ok(await GetAverageStrRateInPeriod(id, DateTime.MinValue, DateTime.Now));
+            return await GetAverageStrRateInPeriod(id, DateTime.MinValue, DateTime.Now);
         }
 
         [Route("{id}/strrate/averageindates")]
@@ -61,7 +61,7 @@ namespace Workout.Dashboard.Web.Controllers.Api
         public async Task<IActionResult> GetTopLift(int id)
         {
             if(id <= 0) return BadRequest();
-            return Ok(await GetTopLiftInPeriod(id, DateTime.MinValue, DateTime.Now));
+            return await GetTopLiftInPeriod(id, DateTime.MinValue, DateTime.Now);
         }
 
         [Route("{id}/lift/topindates")]
@@ -77,7 +77,7 @@ namespace Workout.Dashboard.Web.Controllers.Api
         public async Task<IActionResult> GetStrRateEvolution(int id)
         {
             if(id <= 0) return BadRequest();
-            return Ok(await GetStrRateEvolutionInPeriod(id, DateTime.MinValue, DateTime.Now));
+            return await GetStrRateEvolutionInPeriod(id, DateTime.MinValue, DateTime.Now);
         }
 
         [Route("{id}/strrate/evolutionindates")]
@@ -86,6 +86,14 @@ namespace Workout.Dashboard.Web.Controllers.Api
         {
             if(id <= 0) return BadRequest();
             return Ok(await _exerciseCommands.GetStrRateEvolutionInPeriod(id, startDate, endDate));
+        }
+
+        [Route("{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetBasicInfo(int id)
+        {
+            if(id <= 0) return BadRequest();
+            return Ok(await _exerciseCommands.GetExerciseBasicInfo(id));
         }
     }
 }

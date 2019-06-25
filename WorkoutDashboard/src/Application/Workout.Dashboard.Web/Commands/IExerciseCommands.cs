@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Workout.Dashboard.Web.Commands
@@ -10,5 +11,6 @@ namespace Workout.Dashboard.Web.Commands
         Task<dynamic> GetCurrentStrRate(int exerciseId);
         Task<dynamic> GetTopLiftInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
         Task<IEnumerable<dynamic>> GetStrRateEvolutionInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
+        Task<dynamic> GetExerciseBasicInfo(int exerciseId);
     }
 }

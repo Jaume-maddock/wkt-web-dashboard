@@ -87,22 +87,45 @@ namespace Workout.Dashboard.Web.Queries
             }
         } 
 
-        public async Task<IDictionary<string, object>> GetTopLiftInPeriodByExercise(int exerciseId)
+        public async Task<IDictionary<string, object>> GetTopLiftInPeriodByExercise(int exerciseId, DateTime startDate, DateTime endDate) 
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
                 IEnumerable<dynamic> dbResponse = await connection.QueryAsync<dynamic>(
-                    @"select we.exercise_lift as Lift,
+                    $@"select we.exercise_lift as Lift,
                         we.exercise_rep_count as RepCount,
                         w.workout_date as WorkoutDate
                         from workout_exercises we
                         inner join workout w on we.workout_id = w.workout_id
                         where we.exercise_id = '{exerciseId}'
                         and w.workout_date >= '{startDate}' and w.workout_date <= '{endDate}'
-                        order by we.exercise_lift desc limit 1;";
+                        order by we.exercise_lift desc limit 1;");
                 return (from row in dbResponse select (IDictionary<string, object>)row).ToList().FirstOrDefault();
             }
         }
+
+        /// <summary>
+        /// Gets Name and group for an exercise.
+        /// </summary>
+        /// <param name="exerciseId"></param>
+        /// <returns></returns>
+        public async Task<IDictionary<string, object>> GetBasicInfo(int exerciseId) 
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                IEnumerable<dynamic> dbResponse = await connection.QueryAsync<dynamic>(
+                    $@"select ex.exercise_type_id as Type,
+                        et.exercise_type_name as TypeName,
+                        ex.exercise_id as _id,
+                        ex.exercise_name as Name
+                        from exercise ex
+                        inner join exercise_type et on ex.exercise_type_id = et.exercise_type_id 
+                        where ex.exercise_id = '{exerciseId}'
+                        limit 1;");
+                return (from row in dbResponse select (IDictionary<string, object>)row).ToList().FirstOrDefault();
+            }
+        } 
     }
 }

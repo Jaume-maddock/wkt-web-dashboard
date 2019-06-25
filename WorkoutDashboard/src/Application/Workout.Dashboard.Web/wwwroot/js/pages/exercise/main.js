@@ -25,7 +25,7 @@ $(function() {
         if(data.repcount !== undefined) {
             $(id + " .info-box-rep").html(data.repcount);
         }
-        if(data.date !== undefined) {
+        if(data.workoutdate !== undefined) {
             $(id + " .info-box-date").html(data.workoutdate);
         }
     };
@@ -35,29 +35,27 @@ $(function() {
             labels  : [],
             datasets: []
         };
-        data[0].strRateInPeriods.forEach(function(period){
-            var currentDate = new Date(period.startDate);
-            areaChartData.labels.push(currentDate.toLocaleString('en-us', {month: 'long'}));
-        });
-        var palette = new ColorPalette();
+
+        var currentColor = "#0384c4";
+        
+        
+
+        var values = [];
         data.forEach(function(current){
-            var values = [];
-            var currentColor = palette.getColor();
-            current.strRateInPeriods.forEach(function(str){
-                //if(str.strRate < 250)
-                values.push(str.strRate);
-            });
-            var dataset = {
-                label               : current.exerciseTypeName.toString(),
-                strokeColor         : currentColor,
-                pointColor          : currentColor,
-                pointStrokeColor    : currentColor,
-                pointHighlightFill  : '#fff',
-                pointHighlightStroke: currentColor,
-                data                : values
-            };
-            areaChartData.datasets.push(dataset);
+            values.push(current.StrRate);
+            areaChartData.labels.push(current.Date);
         });
+            
+        var dataset = {
+            label               : "Str-Rate",
+            strokeColor         : currentColor,
+            pointColor          : currentColor,
+            pointStrokeColor    : currentColor,
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: currentColor,
+            data                : values
+        };
+        areaChartData.datasets.push(dataset);
 
         var config = {
             options: {
@@ -78,6 +76,11 @@ $(function() {
                                 'year': 'MMM DD',
                             }
                         }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
                     }]
                 }
             }
@@ -87,6 +90,7 @@ $(function() {
         // This will get the first returned node in the jQuery collection.
         var areaChart       = new Chart(areaChartCanvas, config);
         var areaChartOptions = {
+            scaleBeginAtZero: true,
             //Boolean - If we should show the scale at all
             showScale               : true,
             //Boolean - Whether grid lines are shown across the chart
@@ -130,6 +134,16 @@ $(function() {
 
     };
 
+    function renderBasicInfo (id, data) {
+        $(id + " .exercise-name").html(data.name);
+        $(id + " .group-name").html(data.typename);
+    };
+
+    $.get("/api/v1/exercises/"+ this.ExerciseId,
+    function(responseData, status) {
+        renderBasicInfo("#exercise-basic-info", responseData);
+    });
+
     $.get("/api/v1/exercises/"+ this.ExerciseId +"/strrate/top",
     function(responseData, status) {
         renderBoxInfo("#box-top-str", responseData);
@@ -152,6 +166,6 @@ $(function() {
 
     $.get("/api/v1/exercises/"+ this.ExerciseId +"/strrate/evolution",
     function(responseData, status) {
-        renderBoxInfo("#chart-strrate-evo", responseData);
+        renderChart("#chart-strrate-evo", responseData);
     });
 });

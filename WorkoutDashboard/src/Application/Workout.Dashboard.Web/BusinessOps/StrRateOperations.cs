@@ -8,10 +8,16 @@ namespace Workout.Dashboard.Web.BusinessOps
 {
     public class StrRateOperations : IStrRateOperations
     {
-        public double CalculateAverageStrRate(IEnumerable<dynamic> exercises)
+        public decimal CalculateAverageStrRate(IEnumerable<dynamic> exercises)
         {
-            var a = exercises.Average(x => CalculateStrRate(x.lift, x.repcount));
-            return 0;
+            decimal strRateSum = 0;
+            foreach (var item in exercises)
+            {
+                strRateSum += CalculateStrRate(item.lift, item.repcount);
+            }
+            var result = strRateSum / exercises.Count();
+            return decimal.Round(result, 2);
+            //TODO return exercises.Average(x => (decimal)CalculateStrRate(x.lift, x.repcount));
         }
 
         public decimal CalculateStrRate(decimal lift, int repCount)
