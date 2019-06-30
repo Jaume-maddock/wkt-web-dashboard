@@ -95,5 +95,12 @@ namespace Workout.Dashboard.Web.Controllers.Api
             if(id <= 0) return BadRequest();
             return Ok(await _exerciseCommands.GetExerciseBasicInfo(id));
         }
+
+        [Route("tree")]
+        [HttpGet]
+        public async Task<IActionResult> GetTree()
+        {
+            return Ok(await _exerciseCommands.GetExerciseTree());
+        }
     }
 }

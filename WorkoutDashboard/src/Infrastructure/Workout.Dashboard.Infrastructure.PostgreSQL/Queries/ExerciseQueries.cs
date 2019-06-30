@@ -127,5 +127,23 @@ namespace Workout.Dashboard.Web.Queries
                 return (from row in dbResponse select (IDictionary<string, object>)row).ToList().FirstOrDefault();
             }
         } 
+
+        public async Task<IEnumerable<IDictionary<string, object>>> GetAllExercises()//TODO in dates 
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                connection.Open();
+                IEnumerable<dynamic> dbResponse = await connection.QueryAsync<dynamic>(
+                    $@"select ex.exercise_type_id as Type,
+                        et.exercise_type_name as TypeName,
+                        ex.exercise_id as _id,
+                        ex.exercise_name as Name
+                        from exercise ex
+                        inner join exercise_type et on ex.exercise_type_id = et.exercise_type_id
+                        order by ex.exercise_type_id 
+                        ");
+                return (from row in dbResponse select (IDictionary<string, object>)row).ToList();
+            }
+        } 
     }
 }

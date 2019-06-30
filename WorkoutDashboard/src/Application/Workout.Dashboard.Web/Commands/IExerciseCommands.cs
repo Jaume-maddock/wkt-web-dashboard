@@ -12,5 +12,6 @@ namespace Workout.Dashboard.Web.Commands
         Task<dynamic> GetTopLiftInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
         Task<IEnumerable<dynamic>> GetStrRateEvolutionInPeriod(int exerciseId, DateTime startDate, DateTime endDate);
         Task<dynamic> GetExerciseBasicInfo(int exerciseId);
+        Task<IEnumerable<dynamic>> GetExerciseTree();
     }
 }

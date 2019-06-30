@@ -116,5 +116,15 @@ namespace Workout.Dashboard.Web.Commands
         {
             return (await _exerciseQueries.GetBasicInfo(exerciseId)).AsDynamic();
         }
+
+        /// <summary>
+        /// Full exercise tree.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<dynamic>> GetExerciseTree()
+        {
+            IEnumerable<dynamic> exercises = (await _exerciseQueries.GetAllExercises()).AsDynamicList();
+            return exercises.GroupBy(ex => ex.type).ToList();
+        }
     }
 }

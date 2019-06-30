@@ -1,3 +1,11 @@
 .box-info-main {
     font-size: 50px;
 }
+
+.skin-blue .main-header .navbar {
+    background-color: #bc3c65;
+}
+
+.skin-blue .main-header .logo {
+    background-color: #a81846;
+}
