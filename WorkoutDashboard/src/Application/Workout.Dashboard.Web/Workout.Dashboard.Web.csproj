@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AdminLTE" Version="2.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.22" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\Workout.Dashboard.Domain\Workout.Dashboard.Domain.csproj" />
